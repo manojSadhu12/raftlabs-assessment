@@ -80,7 +80,14 @@ The project is structured using **Yarn workspaces** for modularity and maximum r
 
 ## Setup Instructions
 
-### 1. Clone & Install
+### 1. System Requirements
+
+Node version: 22.17.1
+Yarn version: 4.9.2
+Ensure iOS and Android are setup as per the offical [React Native setup guide](https://reactnative.dev/docs/set-up-your-environment)
+
+
+### 2. Clone & Install
 
 ```bash
 git clone https://github.com/manojSadhu12/raftlabs-assessment.git
@@ -88,7 +95,7 @@ cd raftlabs-assessment
 yarn install
 ```
 
-### 2. Run iOS App
+### 3. Run iOS App
 
 ```bash
 cd platforms/mobile/ios
@@ -98,7 +105,7 @@ cd ..
 yarn run ios
 ```
 
-### 3. Run Android App
+### 4. Run Android App
 
 ```bash
 cd platforms/mobile
@@ -106,13 +113,13 @@ yarn run android
 ```
 
 
-### 4. Start dev server of All Applications
+### 5. Start dev server of All Applications
 
 ```bash
 yarn start
 ```
 
-### 5. Access in Browser
+### 6. Access in Browser
 
 ```bash
 http://localhost:3000
