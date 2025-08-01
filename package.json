@@ -1,0 +1,25 @@
+{
+  "name": "apps",
+  "workspaces": [
+    "platforms/*",
+    "app",
+    "app-configs",
+    "mf-apps/*",
+    "shared-packages/*"
+  ],
+  "scripts": {
+    "start": "concurrently \"yarn start:platforms\" \"yarn start:mf:mobile\" \"yarn start:mf:web\"",
+    "start:platforms": "yarn workspaces foreach -p -v -i -A --include \"@platform/*\" run start",
+    "start:mf:mobile": "yarn workspaces foreach -p -v -i -A --include \"@mf/*\" run start:mobile:mf",
+    "start:mf:web": "yarn workspaces foreach -p -v -i -A --include \"@mf/*\" run start:web"
+  },
+  "devDependencies": {
+    "@module-federation/typescript": "3.1.3",
+    "concurrently": "^9.2.0"
+  },
+  "packageManager": "yarn@4.9.2",
+  "engines": {
+    "node": "22.17.1",
+    "npm": "10.9.2"
+  }
+}

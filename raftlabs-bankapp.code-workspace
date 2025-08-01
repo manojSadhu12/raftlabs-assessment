@@ -1,0 +1,49 @@
+{
+	"folders": [
+		{
+			"name": "✨ raftlabs-assessment",
+			"path": "."
+		},
+		{
+			"name": "🖥️ @platform/web",
+			"path": "platforms/web"
+		},
+		{
+			"name": "📱 @platform/mobile",
+			"path": "platforms/mobile"
+		},
+		{
+			"name": "🌐 @platform/server",
+			"path": "platforms/server"
+		},
+		{
+			"name": "🚀 app",
+			"path": "app"
+		},
+		{
+			"name": "🚀 app-configs",
+			"path": "app-configs"
+		},
+		{
+			"name": "🧩 @mf/account-details",
+			"path": "mf-apps/account-details"
+		},
+		{
+			"name": "🧩 @mf/transactions",
+			"path": "mf-apps/transactions"
+		},
+		{
+			"name": "📦 @rur/event-bus",
+			"path": "shared-packages/event-bus"
+		},
+		{
+			"name": "📦 @rur/navigation",
+			"path": "shared-packages/navigation"
+		},
+		{
+			"name": "📦 @rur/ui",
+			"path": "shared-packages/ui"
+		}
+	],
+	"settings": {}
+}

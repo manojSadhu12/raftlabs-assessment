@@ -1,0 +1,14 @@
+{
+    "name": "app",
+    "version": "0.0.1",
+    "private": true,
+    "main": "index.ts",
+    "dependencies": {
+        "@apollo/client": "^3.13.9",
+        "@rur/ui": "0.0.1",
+        "graphql": "^16.11.0"
+    },
+    "peerDependencies": {
+        "react": ">=19.0.0"
+    }
+}

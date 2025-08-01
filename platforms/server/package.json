@@ -1,0 +1,12 @@
+{
+    "name": "@platform/server",
+    "version": "0.0.1",
+    "private": true,
+    "main": "index.ts",
+    "scripts": {
+        "start": "json-graphql-server db.js -p 8080"
+    },
+    "dependencies": {
+        "json-graphql-server": "^3.2.1"
+    }
+}

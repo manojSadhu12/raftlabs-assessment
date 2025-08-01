@@ -1,0 +1,24 @@
+{
+    "name": "@mf/account-details",
+    "version": "0.0.1",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "start:web": "webpack serve --config webpack.config.web.mjs --mode development",
+        "start:mobile": "react-native start --port 8081",
+        "start:mobile:mf": "APP_TYPE=MF react-native start --port 8082",
+        "build:web": "webpack --config webpack.config.web.mjs --mode production",
+        "build:ios": "react-native bundle --entry-file index.js --platform ios --bundle-output ./dist/main.jsbundle --assets-dest ./dist --dev false",
+        "build:android": "react-native bundle --entry-file index.js --platform android --bundle-output ./dist/main.jsbundle --assets-dest ./dist --dev false"
+    },
+    "dependencies": {
+        "@rur/ui": "0.0.1",
+        "react-native": "0.80.2"
+    },
+    "devDependencies": {
+        "webpack": "^5.101.0"
+    },
+    "peerDependencies": {
+        "react": ">=19.0.0"
+    }
+}
