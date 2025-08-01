@@ -83,7 +83,9 @@ The project is structured using **Yarn workspaces** for modularity and maximum r
 ### 1. System Requirements
 
 Node version: 22.17.1
+
 Yarn version: 4.9.2
+
 Ensure iOS and Android are setup as per the offical [React Native setup guide](https://reactnative.dev/docs/set-up-your-environment)
 
 
