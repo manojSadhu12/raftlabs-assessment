@@ -148,9 +148,9 @@ Due to this Architecture platforms can be easily copied to other apps.
 - Cross-MF communication handled via global **`@rur/event-bus`**
 
 ### Shared Layer
-- Shared UI with **`@nur/ui`** and navigation with **`@nur/navigation`** via workspace packages
+- Shared UI with **`@rur/ui`** and navigation with **`@rur/navigation`** via workspace packages
 - UI kit built on React Native primitives + `react-native-web`
-- **`@nur/navigation`** is a wrapper between **react-router-dom** and **react-navigation**
+- **`@rur/navigation`** is a wrapper between **react-router-dom** and **react-navigation**
 
 ### API Layer
 - Uses `json-graphql-server` for local development
@@ -159,22 +159,39 @@ Due to this Architecture platforms can be easily copied to other apps.
 ---
 
 ## CI/CD & Deployment Plan
+The CI/CD process should be more robust and specific to a micro-frontend architecture.
 
-### CI/CD Flow
+### CI/CD flow for Micro-Frontends
+Each micro-frontend gets its own pipeline.
 
-```yaml
-# Suggested steps per MF or shell
-- Detect change in package
-- Run lint and test
-- Build using Webpack or Re.Pack
-- Publish static artifacts to CDN
-- Update host `remoteEntry` map
-```
+1. **Code Commit or manual trigger:** MF pipeline starts
+2. **Test & Build:** The code is tested, and then built using Webpack for web and Re.Pack for mobile.
+3. **Versioning & Publish:** The build artifacts (like remoteEntry.js or .bundle) are versioned with a the supported host platform version and published to a CDN.
+4. **Host Notification:** The host application is updated with the new version on reload. 
 
+Here are the build commands for Micro-Frontends
 ```bash
 cd into @mf module
 
 yarn build:web
+yarn build:ios
+yarn build:web
+```
+
+### CI/CD flow for Host application (Platform)
+The host applications have a more traditional pipeline.
+
+1. **Code Commit or manual trigger:** Host pipeline starts
+2. **Test & Build:** The host code is tested and then built.
+3. **Deployment:** The web host's static files are deployed to a server, and the mobile host's .ipa or .apk files are published to the app stores.
+
+
+Here are the build commands for Host (Platform)
+```bash
+cd platforms/web
+yarn build
+
+cd platforms/mobile
 yarn build:ios
 yarn build:web
 ```
@@ -184,8 +201,59 @@ yarn build:web
 ## Known Limitations & Improvements
 
 - Currently, Module Federation remotes are not versioned. This is particularly important for mobile platforms, where users may continue using older versions of the app. Without proper versioning, incompatibilities between the host and updated remote modules can arise. A versioning strategy (e.g., semver-based URLs or CDN folder structures) should be implemented to ensure backward compatibility.
+- The current mobile bundles are plain JavaScript bundles. For improved runtime performance, memory usage, and startup speed—especially on Android—these can be migrated to Hermes bytecode bundles. Re.Pack provides built-in support for Hermes via a dedicated plugin. Integrating Hermes would be a valuable optimization for production builds.
 - Error handling mechanisms (such as network error boundaries, fallback UIs, and retry logic) are not yet implemented. This should be addressed to improve user experience in real-world scenarios.
 - The current implementation does not include unit or integration tests. Future improvements should incorporate tests using frameworks like Jest and React Native Testing Library to ensure reliability and maintainability.
+
+---
+
+## Primary Goals of the Architecture
+
+### Scalable & Reusable Platform Layer
+
+The platform layer (Web, Mobile, Server) is designed to be **loosely coupled** with the core application logic. This approach makes each platform:
+
+- Independently versionable and **publishable to a private npm registry**
+- **Reusable across multiple projects** or repositories
+- Easier to maintain, since platforms act as boilerplates with low update frequency (primarily dependency updates)
+
+This separation of concerns enhances code modularity and scalability across teams and applications.
+
+---
+
+### Developer Experience
+
+Setting up a local environment to run the host application along with multiple Micro Frontends (MFEs) is typically complex and time-consuming. This architecture simplifies that process by:
+
+- **Loosely coupling the platforms** to the host and remotes
+- **Sharing platform code via Yarn Workspaces** or a private npm registry
+- Reducing duplication and setup time across MFEs
+
+Developers can focus on feature development rather than infrastructure setup.
+
+---
+
+### Minimal Performance Overhead
+
+To ensure optimal performance:
+
+- All **shared dependencies** between the host and Micro Frontends are **declared as singletons**
+- This avoids duplication of packages like `react`, `react-native`, etc., across bundles
+- Resulting in **smaller overall bundle sizes** and avoiding multiple instances of the same library at runtime
+
+This approach is especially beneficial in mobile builds where performance constraints are tighter.
+
+---
+
+### Consistent Cross-Platform Routing
+
+The custom shared package **`@rur/navigation`** is designed to:
+
+- Ensure routing behavior remains **consistent between Web and Mobile**
+- Support routing from **within Micro Frontends**, even when they are hosted independently
+- Frameworks like Next.js and Expo are intentionally not used in this architecture, as their reliance on file-based routing poses challenges for integrating routes defined within independently deployed Module Federated applications. 
+
+This shared routing layer makes cross-platform navigation predictable and maintainable.
 
 ---
 
